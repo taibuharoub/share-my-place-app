@@ -12,22 +12,29 @@ export class Modal {
         this.modalTemplateEl.content,
         true
       );
-      const modelElement = modalElements.querySelector(".modal");
-      const backdropElement = modalElements.querySelector(".backdrop");
+      this.modelElement = modalElements.querySelector(".modal");
+      this.backdropElement = modalElements.querySelector(".backdrop");
       const contentElement = document.importNode(
         this.contentTemplateEl.content,
         true
       );
 
-      modelElement.appendChild(contentElement);
+      this.modelElement.appendChild(contentElement);
 
-      document.body.insertAdjacentElement("afterbegin", modelElement);
-      document.body.insertAdjacentElement("afterbegin", backdropElement);
+      document.body.insertAdjacentElement("afterbegin", this.modelElement);
+      document.body.insertAdjacentElement("afterbegin", this.backdropElement);
     } else {
       //fallback code
       alert(this.fallbackText);
     }
   }
 
-  hide () {}
+  hide () {
+      if (this.modelElement) {
+          document.body.removeChild(this.modelElement) //this.modelElement.remove()
+          document.body.removeChild(this.backdropElement)
+          this.modelElement = null;
+          this.backdropElement = null;
+      }
+  }
 }
